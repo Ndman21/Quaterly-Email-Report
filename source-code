@@ -1,0 +1,56 @@
+#importing necessary modules
+import smtplib
+import ssl
+import openpyxl
+from openpyxl import load_workbook
+import csv
+import warnings
+
+
+#opening excel workbook and reading data
+warnings.simplefilter(action='ignore', category=UserWarning)
+wb = load_workbook(filename="filename", data_only=True)
+sheet = wb.active
+ctx = ssl.create_default_context()
+
+
+#this is the function that runs the whole show, sends the email
+def sendmail(name, sender_email, rec_email, password, oil_assigned, oil_billed, oil_used, oil_rem, TAPS_assigned, TAPS_billed, TAPS_used, TAPS_rem,
+             bio_assigned, bio_billed, bio_used, bio_rem, wood_assigned, wood_billed, wood_used, wood_rem, ark_assigned, ark_billed, ark_used, ark_rem,
+             MOS_assigned, MOS_billed, MOS_used, MOS_rem, test_assigned, test_billed, test_used, test_rem, message):
+    message = ("Subject: Yearly Hours " +
+            name + " \n" + name + ",\n"
+            "\nHope you are doing well, for Oil you were assigned " + str(oil_assigned) + " hours this quarter. Of "
+            "those you have completed " + str(oil_billed) + ", which is " + str(oil_used)[2:4] + "% of your assigned hours. This leaves"
+            " you with " + str(oil_rem) + " remaining. For TAPS & Conferences you were assigned " + str(TAPS_assigned) + " hours "
+            " this quarter. Of those you have completed " + str(TAPS_billed) + ", which is " + str(TAPS_used)[2:4] + "% of your assigned hours"
+            " This leaves you with " + str(TAPS_rem) + " remaining. For BioRefinery you were assigned " + str(bio_assigned) + " hours this quarter."
+            " Of those you have completed " + str(bio_billed) + ", which is " + str(bio_used)[2:4] + "% of your assigned hours. This leaves you with " + str(bio_rem) +
+            " remaining. For Wood Adhesives you were assigned " + str(wood_assigned) + " hours thus quarter. Of those you have completed " + str(wood_billed) +
+            ", which is " + str(wood_used)[2:4] + "% of your assigned hours. This leaves you with " + str(wood_rem) + " remaining. For Arkema you were assigned " + str(ark_assigned) +
+            " hours this quarter. Of those you have completed " + str(ark_billed) + ", which is " + str(ark_used)[2:4] + "% of your assigned hours. This leaves you with " + str(ark_rem) +
+            " remaining. For MOS you were assigned " + str(MOS_assigned) + " hours this quarter. Of those you have completed " + str(MOS_billed) + ", which is " + str(MOS_used)[2:4] +
+            "% of your assigned hours. This leaves you with " + str(MOS_rem) + " remaining. For Testing you were assigned " + str(test_assigned) + " hours this quarter."
+            " Of those you have completed " + str(test_billed) + ", which is " + str(test_used)[2:4] + "% of your assigned hours. This leaves you with " + str(test_rem) + " remaining."
+            "\n" + str(message) + "\n" +
+            "\n-regards, Jim-Bob")
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", port=465, context=ctx) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, rec_email, message)
+        print("\nSuccess " + name)
+
+#these are the specific people and their info that is carried out by the above function (sendmail)
+sendmail("Larry", 'sendingemail@gmail.com', 'receivingemail@random.com', "password", sheet["D4"].value, sheet["E4"].value, sheet["F4"].value, sheet["G4"].value, sheet["I4"].value, sheet["J4"].value, sheet["K4"].value, sheet["L4"].value, sheet["N4"].value, sheet["O4"].value, sheet["P4"].value, sheet["Q4"].value, sheet["S4"].value, sheet["T4"].value, sheet["U4"].value, sheet["V4"].value, sheet["X4"].value, sheet["Y4"].value, sheet["Z4"].value, sheet["AA4"].value, sheet["AC4"].value, sheet["AD4"].value, sheet["AE4"].value, sheet["AF4"].value, sheet["AH4"].value, sheet["AI4"].value, sheet["AJ4"].value, sheet["AK4"].value, sheet["AL2"].value)
+sendmail("Steve", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D8"].value, sheet["E8"].value, sheet["F8"].value, sheet["G8"].value, sheet["I8"].value, sheet["J8"].value, sheet["K8"].value, sheet["L8"].value, sheet["N8"].value, sheet["O8"].value, sheet["P8"].value, sheet["Q8"].value, sheet["S8"].value, sheet["T8"].value, sheet["U8"].value, sheet["V8"].value, sheet["X8"].value, sheet["Y8"].value, sheet["Z8"].value, sheet["AA8"].value, sheet["AC8"].value, sheet["AD8"].value, sheet["AE8"].value, sheet["AF8"].value, sheet["AH8"].value, sheet["AI8"].value, sheet["AJ8"].value, sheet["AK8"].value, sheet["AL6"].value)
+sendmail("Bob", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D12"].value, sheet["E12"].value, sheet["F12"].value, sheet["G12"].value, sheet["I12"].value, sheet["J12"].value, sheet["K12"].value, sheet["L12"].value, sheet["N12"].value, sheet["O12"].value, sheet["P12"].value, sheet["Q12"].value, sheet["S12"].value, sheet["T12"].value, sheet["U12"].value, sheet["V12"].value, sheet["X12"].value, sheet["Y12"].value, sheet["Z12"].value, sheet["AA12"].value, sheet["AC12"].value, sheet["AD12"].value, sheet["AE12"].value, sheet["AF12"].value, sheet["AH12"].value, sheet["AI12"].value, sheet["AJ12"].value, sheet["Ak12"].value, sheet["AL10"].value)
+sendmail("John", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D16"].value, sheet["E16"].value, sheet["F16"].value, sheet["G16"].value, sheet["I16"].value, sheet["J16"].value, sheet["K16"].value, sheet["L16"].value, sheet["N16"].value, sheet["O16"].value, sheet["P16"].value, sheet["Q16"].value, sheet["S16"].value, sheet["T16"].value, sheet["U16"].value, sheet["V16"].value, sheet["X16"].value, sheet["Y16"].value, sheet["Z16"].value, sheet["AA16"].value, sheet["AC16"].value, sheet["AD16"].value, sheet["AE16"].value, sheet["AF16"].value, sheet["AH16"].value, sheet["AI16"].value, sheet["AJ16"].value, sheet["AK16"].value, sheet["AL14"].value)
+sendmail("Rick", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D20"].value, sheet["E20"].value, sheet["F20"].value, sheet["G20"].value, sheet["I20"].value, sheet["J20"].value, sheet["K20"].value, sheet["L20"].value, sheet["N20"].value, sheet["O20"].value, sheet["P20"].value, sheet["Q20"].value, sheet["S20"].value, sheet["T20"].value, sheet["U20"].value, sheet["V20"].value, sheet["X20"].value, sheet["Y20"].value, sheet["Z20"].value, sheet["AA20"].value, sheet["AC20"].value, sheet["AD20"].value, sheet["AE20"].value, sheet["AF20"].value, sheet["AH20"].value, sheet["AI20"].value, sheet["AJ20"].value, sheet["AK20"].value, sheet["AL18"].value)
+sendmail("Marc", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D24"].value, sheet["E24"].value, sheet["F24"].value, sheet["G24"].value, sheet["I24"].value, sheet["J24"].value, sheet["K24"].value, sheet["L24"].value, sheet["N24"].value, sheet["O24"].value, sheet["P24"].value, sheet["Q24"].value, sheet["S24"].value, sheet["T24"].value, sheet["U24"].value, sheet["V24"].value, sheet["X24"].value, sheet["Y24"].value, sheet["Z24"].value, sheet["AA24"].value, sheet["AC24"].value, sheet["AD24"].value, sheet["AE24"].value, sheet["AF24"].value, sheet["AH24"].value, sheet["AI24"].value, sheet["AJ24"].value, sheet["AK24"].value, sheet["AL22"].value)
+sendmail("Rob", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D28"].value, sheet["E28"].value, sheet["F28"].value, sheet["G28"].value, sheet["I28"].value, sheet["J28"].value, sheet["K28"].value, sheet["L28"].value, sheet["N28"].value, sheet["O28"].value, sheet["P28"].value, sheet["Q28"].value, sheet["S28"].value, sheet["T28"].value, sheet["U28"].value, sheet["V28"].value, sheet["X28"].value, sheet["Y28"].value, sheet["Z28"].value, sheet["AA28"].value, sheet["AC28"].value, sheet["AD28"].value, sheet["AE28"].value, sheet["AF28"].value, sheet["AH28"].value, sheet["AI28"].value, sheet["AJ28"].value, sheet["AK28"].value, sheet["AL26"].value)
+sendmail("Dwight", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D32"].value, sheet["E32"].value, sheet["F32"].value, sheet["G32"].value, sheet["I32"].value, sheet["J32"].value, sheet["K32"].value, sheet["L32"].value, sheet["N32"].value, sheet["O32"].value, sheet["P32"].value, sheet["Q32"].value, sheet["S32"].value, sheet["T32"].value, sheet["U32"].value, sheet["V32"].value, sheet["X32"].value, sheet["Y32"].value, sheet["Z32"].value, sheet["AA32"].value, sheet["AC32"].value, sheet["AD32"].value, sheet["AE32"].value, sheet["AF32"].value, sheet["AH32"].value, sheet["AI32"].value, sheet["AJ32"].value, sheet["AK32"].value, sheet["AL30"].value)
+sendmail("Lee", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D36"].value, sheet["E36"].value, sheet["F36"].value, sheet["G36"].value, sheet["I36"].value, sheet["J36"].value, sheet["K36"].value, sheet["L36"].value, sheet["N36"].value, sheet["O36"].value, sheet["P36"].value, sheet["Q36"].value, sheet["S36"].value, sheet["T36"].value, sheet["U36"].value, sheet["V36"].value, sheet["X36"].value, sheet["Y36"].value, sheet["Z36"].value, sheet["AA36"].value, sheet["AC36"].value, sheet["AD36"].value, sheet["AE36"].value, sheet["AF36"].value, sheet["AH36"].value, sheet["AI36"].value, sheet["AJ36"].value, sheet["AK36"].value, sheet["AL34"].value)
+sendmail("Kris", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D40"].value, sheet["E40"].value, sheet["F40"].value, sheet["G40"].value, sheet["I40"].value, sheet["J40"].value, sheet["K40"].value, sheet["L40"].value, sheet["N40"].value, sheet["O40"].value, sheet["P40"].value, sheet["Q40"].value, sheet["S40"].value, sheet["T40"].value, sheet["U40"].value, sheet["V40"].value, sheet["X40"].value, sheet["Y40"].value, sheet["Z40"].value, sheet["AA40"].value, sheet["AC40"].value, sheet["AD40"].value, sheet["AE40"].value, sheet["AF40"].value, sheet["AH40"].value, sheet["AI40"].value, sheet["AJ40"].value, sheet["AK40"].value, sheet["AL38"].value)
+sendmail("Keith", 'sendingemail@gmail.com', 'receivingemail@random.com', "password",  sheet["D44"].value, sheet["E44"].value, sheet["F44"].value, sheet["G44"].value, sheet["I44"].value, sheet["J44"].value, sheet["K44"].value, sheet["L44"].value, sheet["N44"].value, sheet["O44"].value, sheet["P44"].value, sheet["Q44"].value, sheet["S44"].value, sheet["T44"].value, sheet["U44"].value, sheet["V44"].value, sheet["X44"].value, sheet["Y44"].value, sheet["Z44"].value, sheet["AA44"].value, sheet["AC44"].value, sheet["AD44"].value, sheet["AE44"].value, sheet["AF44"].value, sheet["AH44"].value, sheet["AI44"].value, sheet["AJ44"].value, sheet["AK44"].value, sheet["AL42"].value)
+
+
